@@ -25,9 +25,9 @@ import java.util.Vector;
 import barqsoft.footballscores.data.DatabaseContract;
 import barqsoft.footballscores.R;
 
-public class myFetchService extends IntentService {
-    public static final String LOG_TAG = "myFetchService";
-    public myFetchService() { super(LOG_TAG); }
+public class FetchDataService extends IntentService {
+    public static final String LOG_TAG = "FetchDataService";
+    public FetchDataService() { super(LOG_TAG); }
 
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -173,7 +173,7 @@ public class myFetchService extends IntentService {
 
                     if (!isReal) {
                         //This if statement changes the match ID of the dummy data so that it all goes into the database
-                        match_id=match_id+Integer.toString(i);
+                        match_id = match_id + Integer.toString(i);
                     }
 
                     mDate = match_data.getString(MATCH_DATE);
@@ -194,7 +194,7 @@ public class myFetchService extends IntentService {
                             //This if statement changes the dummy data's date to match our current date range.
                             Date fragmentdate = new Date(System.currentTimeMillis()+((i-2)*86400000));
                             SimpleDateFormat mformat = new SimpleDateFormat("yyyy-MM-dd");
-                            mDate=mformat.format(fragmentdate);
+                            mDate = mformat.format(fragmentdate);
                         }
                     } catch (Exception e) {
                         Log.d(LOG_TAG, "error here!");

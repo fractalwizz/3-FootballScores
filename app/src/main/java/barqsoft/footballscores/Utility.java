@@ -18,7 +18,7 @@ public class Utility {
         }
     }
 
-    public static String getMatchDay(int match_day,int league_num) {
+    public static String getMatchDay(int match_day, int league_num) {
         if (league_num == CHAMPIONS_LEAGUE) {
             if (match_day <= 6) {
                 return "Group Stages, Matchday : 6";
@@ -36,16 +36,16 @@ public class Utility {
         }
     }
 
-    public static String getScores(int home_goals,int awaygoals) {
-        if (home_goals < 0 || awaygoals < 0) {
+    public static String getScores(int homegoals,int awaygoals) {
+        if (homegoals < 0 || awaygoals < 0) {
             return " - ";
         } else {
-            return String.valueOf(home_goals) + " - " + String.valueOf(awaygoals);
+            return String.valueOf(homegoals) + " - " + String.valueOf(awaygoals);
         }
     }
 
     public static int getTeamCrestByTeamName (String teamname) {
-        if (teamname==null) { return R.drawable.no_icon; }
+        if (teamname == null) { return R.drawable.no_icon; }
 
         switch (teamname) {
             //This is the set of icons that are currently in the app. Feel free to find and add more

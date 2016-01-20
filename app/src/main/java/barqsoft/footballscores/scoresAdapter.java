@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ public class scoresAdapter extends CursorAdapter {
     public double detail_match_id = 0;
     private String FOOTBALL_SCORES_HASHTAG = "#Football_Scores";
 
-    public scoresAdapter(Context context,Cursor cursor,int flags) { super(context,cursor,flags); }
+    public scoresAdapter(Context context,Cursor cursor,int flags) { super(context, cursor, flags); }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
@@ -49,12 +50,14 @@ public class scoresAdapter extends CursorAdapter {
         //Log.v(FetchScoreTask.LOG_TAG,mHolder.home_name.getText() + " Vs. " + mHolder.away_name.getText() +" id " + String.valueOf(mHolder.match_id));
         //Log.v(FetchScoreTask.LOG_TAG,String.valueOf(detail_match_id));
         LayoutInflater vi = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        // layout of details addition
         View v = vi.inflate(R.layout.detail_fragment, null);
         ViewGroup container = (ViewGroup) view.findViewById(R.id.details_fragment_container);
 
+        // is adapter listview item the selected one?
         if (mHolder.match_id == detail_match_id) {
-            //Log.v(FetchScoreTask.LOG_TAG,"will insert extraView");
-
+            // yes - add container + layout for details
             container.addView(v, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
             TextView match_day = (TextView) v.findViewById(R.id.matchday_textview);
@@ -72,6 +75,7 @@ public class scoresAdapter extends CursorAdapter {
                 }
             });
         } else {
+            // no - remove the detail views from adapter listview item
             container.removeAllViews();
         }
     }

@@ -21,7 +21,9 @@ public class MainActivity extends ActionBarActivity {
         Log.d(LOG_TAG, "Reached MainActivity onCreate");
 
         if (savedInstanceState == null) {
+            // setup main screen
             my_main = new PagerFragment();
+
             getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, my_main)
                 .commit();
@@ -66,7 +68,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        Log.v(save_tag,"will retrive");
+        Log.v(save_tag,"will retrieve");
         Log.v(save_tag,"fragment: "+String.valueOf(savedInstanceState.getInt("Pager_Current")));
         Log.v(save_tag,"selected id: "+savedInstanceState.getInt("Selected_match"));
 
