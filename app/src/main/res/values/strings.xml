@@ -47,5 +47,7 @@
 
         During the off season, fake data will be added to the app.
     </string>
-    <string name="widget_text">This is a widget probably.</string>
+
+    <!-- Widget -->
+    <string name="title_widget_match">Football Scores Match Widget</string>
 </resources>

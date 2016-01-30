@@ -27,6 +27,7 @@ import barqsoft.footballscores.R;
 
 public class FetchDataService extends IntentService {
     public static final String LOG_TAG = FetchDataService.class.getSimpleName();
+    public static final String ACTION_DATA_UPDATED = "barqsoft.footballscores.app.ACTION_DATA_UPDATED";
     public FetchDataService() { super(LOG_TAG); }
 
     @Override
@@ -109,7 +110,7 @@ public class FetchDataService extends IntentService {
         }
     }
 
-    private void processJSONdata (String JSONdata,Context mContext, boolean isReal) {
+    private void processJSONdata (String JSONdata, Context mContext, boolean isReal) {
         //JSON data
         // This set of league codes is for the 2015/2016 season. In fall of 2016, they will need to
         // be updated. Feel free to use the codes
@@ -207,24 +208,24 @@ public class FetchDataService extends IntentService {
                     match_day = match_data.getString(MATCH_DAY);
 
                     ContentValues match_values = new ContentValues();
-                    match_values.put(DatabaseContract.scores_table.MATCH_ID,match_id);
-                    match_values.put(DatabaseContract.scores_table.DATE_COL,mDate);
-                    match_values.put(DatabaseContract.scores_table.TIME_COL,mTime);
-                    match_values.put(DatabaseContract.scores_table.HOME_COL,Home);
-                    match_values.put(DatabaseContract.scores_table.AWAY_COL,Away);
-                    match_values.put(DatabaseContract.scores_table.HOME_GOALS_COL,Home_goals);
-                    match_values.put(DatabaseContract.scores_table.AWAY_GOALS_COL,Away_goals);
-                    match_values.put(DatabaseContract.scores_table.LEAGUE_COL,League);
-                    match_values.put(DatabaseContract.scores_table.MATCH_DAY,match_day);
+                    match_values.put(DatabaseContract.scores_table.MATCH_ID, match_id);
+                    match_values.put(DatabaseContract.scores_table.DATE_COL, mDate);
+                    match_values.put(DatabaseContract.scores_table.TIME_COL, mTime);
+                    match_values.put(DatabaseContract.scores_table.HOME_COL, Home);
+                    match_values.put(DatabaseContract.scores_table.AWAY_COL, Away);
+                    match_values.put(DatabaseContract.scores_table.HOME_GOALS_COL, Home_goals);
+                    match_values.put(DatabaseContract.scores_table.AWAY_GOALS_COL, Away_goals);
+                    match_values.put(DatabaseContract.scores_table.LEAGUE_COL, League);
+                    match_values.put(DatabaseContract.scores_table.MATCH_DAY, match_day);
 
                     //log spam
-                    //Log.v(LOG_TAG,match_id);
-                    //Log.v(LOG_TAG,mDate);
-                    //Log.v(LOG_TAG,mTime);
-                    //Log.v(LOG_TAG,Home);
-                    //Log.v(LOG_TAG,Away);
-                    //Log.v(LOG_TAG,Home_goals);
-                    //Log.v(LOG_TAG,Away_goals);
+                    //Log.w(LOG_TAG, match_id);
+                    //Log.w(LOG_TAG, mDate);
+                    //Log.w(LOG_TAG, mTime);
+                    //Log.w(LOG_TAG, Home);
+                    //Log.w(LOG_TAG, Away);
+                    //Log.w(LOG_TAG, Home_goals);
+                    //Log.w(LOG_TAG, Away_goals);
 
                     values.add(match_values);
                 }
@@ -235,9 +236,20 @@ public class FetchDataService extends IntentService {
             values.toArray(insert_data);
 
             inserted_data = mContext.getContentResolver().bulkInsert(DatabaseContract.BASE_CONTENT_URI,insert_data);
+
+            // update widgets
+            updateWidgets();
+
             //Log.v(LOG_TAG,"Succesfully Inserted : " + String.valueOf(inserted_data));
         } catch (JSONException e) {
             Log.e(LOG_TAG,e.getMessage());
         }
+    }
+
+    private void updateWidgets() {
+        Log.w(LOG_TAG, "updateWidgets");
+        Context context = getApplicationContext();
+        Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED).setPackage(context.getPackageName());
+        context.sendBroadcast(dataUpdatedIntent);
     }
 }

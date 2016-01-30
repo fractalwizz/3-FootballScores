@@ -19,11 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <provider
             android:name=".data.ScoresProvider"
             android:authorities="@string/content_authority" />
-
         <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about"
@@ -33,6 +31,16 @@
                 android:value="barqsoft.footballscores.MainActivity" />
         </activity>
         <service android:name=".service.FetchDataService" />
+        <receiver
+            android:name=".widget.MatchWidgetProvider"
+            android:label="@string/title_widget_match" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="barqsoft.footballscores.app.ACTION_DATA_UPDATED"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info_match" />
+        </receiver>
+        <service android:name=".widget.MatchWidgetIntentService" />
     </application>
-
 </manifest>
