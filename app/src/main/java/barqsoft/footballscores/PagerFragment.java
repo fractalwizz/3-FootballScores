@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class PagerFragment extends Fragment {
     public static final int NUM_PAGES = 5;
     public ViewPager mPagerHandler;
     private myPageAdapter mPagerAdapter;
+    public static final String LOG_TAG = PagerFragment.class.getSimpleName();
 
     // tabs
     private TabFragment[] viewFragments = new TabFragment[NUM_PAGES];
@@ -67,9 +69,9 @@ public class PagerFragment extends Fragment {
 
             if (julianDay == currentJulianDay) {
                 return context.getString(R.string.today);
-            } else if ( julianDay == currentJulianDay +1 ) {
+            } else if (julianDay == currentJulianDay + 1) {
                 return context.getString(R.string.tomorrow);
-            } else if ( julianDay == currentJulianDay -1) {
+            } else if (julianDay == currentJulianDay - 1) {
                 return context.getString(R.string.yesterday);
             } else {
                 Time time = new Time();

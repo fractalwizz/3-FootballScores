@@ -3,12 +3,14 @@ package barqsoft.footballscores.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import barqsoft.footballscores.data.DatabaseContract.scores_table;
 
 public class ScoresDBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Scores.db";
     private static final int DATABASE_VERSION = 2;
+    public static final String LOG_TAG = ScoresDBHelper.class.getSimpleName();
 
     public ScoresDBHelper(Context context) { super(context, DATABASE_NAME, null, DATABASE_VERSION); }
 

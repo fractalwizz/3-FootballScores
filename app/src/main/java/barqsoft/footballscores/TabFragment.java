@@ -20,6 +20,7 @@ import barqsoft.footballscores.service.FetchDataService;
  * A placeholder fragment containing a simple view.
  */
 public class TabFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+    public static final String LOG_TAG = TabFragment.class.getSimpleName();
     public scoresAdapter mAdapter;
     public static final int SCORES_LOADER = 0;
     private String[] fragmentdate = new String[1];
@@ -82,10 +83,10 @@ public class TabFragment extends Fragment implements LoaderManager.LoaderCallbac
         }
         */
 
-        int i = 0;
+        //int i = 0;
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            i++;
+            //i++;
             cursor.moveToNext();
         }
         //Log.v(FetchScoreTask.LOG_TAG,"Loader query: " + String.valueOf(i));

@@ -26,7 +26,7 @@ import barqsoft.footballscores.data.DatabaseContract;
 import barqsoft.footballscores.R;
 
 public class FetchDataService extends IntentService {
-    public static final String LOG_TAG = "FetchDataService";
+    public static final String LOG_TAG = FetchDataService.class.getSimpleName();
     public FetchDataService() { super(LOG_TAG); }
 
     @Override
@@ -53,7 +53,7 @@ public class FetchDataService extends IntentService {
             URL fetch = new URL(fetch_build.toString());
             m_connection = (HttpURLConnection) fetch.openConnection();
             m_connection.setRequestMethod("GET");
-            m_connection.addRequestProperty("X-Auth-Token",getString(R.string.api_key));
+            m_connection.addRequestProperty("X-Auth-Token", getString(R.string.api_key));
             m_connection.connect();
 
             // Read the input stream into a String
@@ -75,7 +75,7 @@ public class FetchDataService extends IntentService {
             if (buffer.length() == 0) { return; }
             JSON_data = buffer.toString();
         } catch (Exception e) {
-            Log.e(LOG_TAG,"Exception here" + e.getMessage());
+            Log.e(LOG_TAG, "Exception here" + e.getMessage());
         } finally {
             if (m_connection != null) { m_connection.disconnect(); }
 
@@ -150,7 +150,6 @@ public class FetchDataService extends IntentService {
         String match_id;
         String match_day;
 
-
         try {
             JSONArray matches = new JSONObject(JSONdata).getJSONArray(FIXTURES);
 
@@ -178,21 +177,21 @@ public class FetchDataService extends IntentService {
 
                     mDate = match_data.getString(MATCH_DATE);
                     mTime = mDate.substring(mDate.indexOf("T") + 1, mDate.indexOf("Z"));
-                    mDate = mDate.substring(0,mDate.indexOf("T"));
+                    mDate = mDate.substring(0, mDate.indexOf("T"));
                     SimpleDateFormat match_date = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss");
                     match_date.setTimeZone(TimeZone.getTimeZone("UTC"));
 
                     try {
-                        Date parseddate = match_date.parse(mDate+mTime);
+                        Date parsedate = match_date.parse(mDate+mTime);
                         SimpleDateFormat new_date = new SimpleDateFormat("yyyy-MM-dd:HH:mm");
                         new_date.setTimeZone(TimeZone.getDefault());
-                        mDate = new_date.format(parseddate);
+                        mDate = new_date.format(parsedate);
                         mTime = mDate.substring(mDate.indexOf(":") + 1);
-                        mDate = mDate.substring(0,mDate.indexOf(":"));
+                        mDate = mDate.substring(0, mDate.indexOf(":"));
 
                         if (!isReal) {
                             //This if statement changes the dummy data's date to match our current date range.
-                            Date fragmentdate = new Date(System.currentTimeMillis()+((i-2)*86400000));
+                            Date fragmentdate = new Date(System.currentTimeMillis() + ((i - 2) * 86400000));
                             SimpleDateFormat mformat = new SimpleDateFormat("yyyy-MM-dd");
                             mDate = mformat.format(fragmentdate);
                         }

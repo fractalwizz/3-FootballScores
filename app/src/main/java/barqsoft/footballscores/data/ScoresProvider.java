@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 public class ScoresProvider extends ContentProvider {
     private static ScoresDBHelper mOpenHelper;
@@ -20,6 +21,8 @@ public class ScoresProvider extends ContentProvider {
     private static final String SCORES_BY_LEAGUE = DatabaseContract.scores_table.LEAGUE_COL + " = ?";
     private static final String SCORES_BY_DATE = DatabaseContract.scores_table.DATE_COL + " LIKE ?";
     private static final String SCORES_BY_ID = DatabaseContract.scores_table.MATCH_ID + " = ?";
+
+    public static final String LOG_TAG = ScoresProvider.class.getSimpleName();
 
     static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -136,15 +139,15 @@ public class ScoresProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Unknown Uri" + uri);
         }
 
-        retCursor.setNotificationUri(getContext().getContentResolver(),uri);
+        retCursor.setNotificationUri(getContext().getContentResolver(), uri);
         return retCursor;
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues values) { return null; }
+    public Uri insert(@NonNull Uri uri, ContentValues values) { return null; }
 
     @Override
-    public int bulkInsert(Uri uri, ContentValues[] values) {
+    public int bulkInsert(@NonNull Uri uri,@NonNull ContentValues[] values) {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         //db.delete(DatabaseContract.SCORES_TABLE,null,null);
         //Log.v(FetchScoreTask.LOG_TAG,String.valueOf(muriMatcher.match(uri)));
@@ -173,5 +176,5 @@ public class ScoresProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) { return 0; }
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) { return 0; }
 }

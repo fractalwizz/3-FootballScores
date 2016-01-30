@@ -14,10 +14,10 @@ public class ViewHolder {
     public double match_id;
 
     public ViewHolder(View view) {
-        home_name = (TextView) view.findViewById(R.id.home_name);
-        away_name = (TextView) view.findViewById(R.id.away_name);
-        score     = (TextView) view.findViewById(R.id.score_textview);
-        date      = (TextView) view.findViewById(R.id.data_textview);
+        home_name  = (TextView)  view.findViewById(R.id.home_name);
+        away_name  = (TextView)  view.findViewById(R.id.away_name);
+        score      = (TextView)  view.findViewById(R.id.score_textview);
+        date       = (TextView)  view.findViewById(R.id.data_textview);
         home_crest = (ImageView) view.findViewById(R.id.home_crest);
         away_crest = (ImageView) view.findViewById(R.id.away_crest);
     }
