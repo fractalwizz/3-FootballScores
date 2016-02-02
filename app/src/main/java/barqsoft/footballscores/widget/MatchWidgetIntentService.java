@@ -90,13 +90,6 @@ public class MatchWidgetIntentService extends IntentService {
 
         data.close();
 
-        Log.w("WidgetIntent", home);
-        Log.w("WidgetIntent", homeDesc);
-        Log.w("WidgetIntent", away);
-        Log.w("WidgetIntent", awayDesc);
-        Log.w("WidgetIntent", time);
-        Log.w("WidgetIntent", score);
-
         for (int appWidgetId : appWidgetIds) {
             Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
             int minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
