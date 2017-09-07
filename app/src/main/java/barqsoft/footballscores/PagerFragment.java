@@ -7,15 +7,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.format.Time;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.stream.IntStream;
 
+// TODO - Locale Handling
 public class PagerFragment extends Fragment {
     public static final int NUM_PAGES = 5;
     public ViewPager mPagerHandler;
@@ -28,15 +31,17 @@ public class PagerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.pager_fragment, container, false);
-        mPagerHandler = (ViewPager) rootView.findViewById(R.id.pager);
+        mPagerHandler = rootView.findViewById(R.id.pager);
         mPagerAdapter = new myPageAdapter(getChildFragmentManager());
 
-        for (int i = 0; i < NUM_PAGES; i++) {
-            Date fragmentdate = new Date(System.currentTimeMillis() + ((i - 2) * 86400000));
-            SimpleDateFormat mformat = new SimpleDateFormat("yyyy-MM-dd");
-            viewFragments[i] = new TabFragment();
-            viewFragments[i].setFragmentDate(mformat.format(fragmentdate));
-        }
+        IntStream.range(0, NUM_PAGES).forEach(
+            i -> {
+                Date fragmentdate = new Date(System.currentTimeMillis() + ((i - 2) * 86400000));
+                SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                viewFragments[i] = new TabFragment();
+                viewFragments[i].setFragmentDate(mFormat.format(fragmentdate));
+            }
+        );
 
         mPagerHandler.setAdapter(mPagerAdapter);
         // either Today or previous tab
@@ -45,7 +50,6 @@ public class PagerFragment extends Fragment {
     }
 
     private class myPageAdapter extends FragmentStatePagerAdapter {
-
         @Override
         public Fragment getItem(int index) { return viewFragments[index]; }
 
@@ -56,16 +60,22 @@ public class PagerFragment extends Fragment {
 
         // Returns the page title for the top indicator
         @Override
-        public CharSequence getPageTitle(int position) { return getDayName(getActivity(), System.currentTimeMillis() + ((position - 2) * 86400000)); }
+        public CharSequence getPageTitle(int position) {
+            return getDayName(getActivity(), System.currentTimeMillis() + ((position - 2) * 86400000));
+        }
 
         public String getDayName(Context context, long dateInMillis) {
             // If the date is today, return the localized version of "Today" instead of the actual
             // day name.
 
-            Time t = new Time();
-            t.setToNow();
-            int julianDay = Time.getJulianDay(dateInMillis, t.gmtoff);
-            int currentJulianDay = Time.getJulianDay(System.currentTimeMillis(), t.gmtoff);
+            GregorianCalendar cal = new GregorianCalendar();
+            cal.setGregorianChange(new Date(Long.MAX_VALUE));
+
+            cal.setTimeInMillis(dateInMillis);
+            int julianDay = cal.get(Calendar.DAY_OF_MONTH);
+
+            cal.setTimeInMillis(System.currentTimeMillis());
+            int currentJulianDay = cal.get(Calendar.DAY_OF_MONTH);
 
             if (julianDay == currentJulianDay) {
                 return context.getString(R.string.today);
@@ -74,10 +84,8 @@ public class PagerFragment extends Fragment {
             } else if (julianDay == currentJulianDay - 1) {
                 return context.getString(R.string.yesterday);
             } else {
-                Time time = new Time();
-                time.setToNow();
                 // Otherwise, the format is just the day of the week (e.g "Wednesday".
-                SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE");
+                SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.US);
                 return dayFormat.format(dateInMillis);
             }
         }

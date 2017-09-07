@@ -1,10 +1,10 @@
 package barqsoft.footballscores;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,10 +32,11 @@ public class scoresAdapter extends CursorAdapter {
         View mItem = LayoutInflater.from(context).inflate(R.layout.scores_list_item, parent, false);
         ViewHolder mHolder = new ViewHolder(mItem);
         mItem.setTag(mHolder);
-        //Log.v(FetchScoreTask.LOG_TAG,"new View inflated");
+
         return mItem;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
         final ViewHolder mHolder = (ViewHolder) view.getTag();
@@ -50,42 +51,39 @@ public class scoresAdapter extends CursorAdapter {
         mHolder.away_crest.setImageResource(Utility.getTeamCrestByTeamName(cursor.getString(COL_AWAY)));
         mHolder.away_crest.setContentDescription(mHolder.away_name.getText() + " Crest");
 
-        //Log.v(FetchScoreTask.LOG_TAG,mHolder.home_name.getText() + " Vs. " + mHolder.away_name.getText() +" id " + String.valueOf(mHolder.match_id));
-        //Log.v(FetchScoreTask.LOG_TAG,String.valueOf(detail_match_id));
         LayoutInflater vi = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (vi == null) { return; }
 
         // layout of details addition
         View v = vi.inflate(R.layout.detail_fragment, null);
-        ViewGroup container = (ViewGroup) view.findViewById(R.id.details_fragment_container);
+        ViewGroup container = view.findViewById(R.id.details_fragment_container);
 
         // is adapter listview item the selected one?
         if (mHolder.match_id == detail_match_id) {
             // yes - add container + layout for details
             container.addView(v, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-            TextView match_day = (TextView) v.findViewById(R.id.matchday_textview);
+            TextView match_day = v.findViewById(R.id.matchday_textview);
             match_day.setText(Utility.getMatchDay(cursor.getInt(COL_MATCHDAY), cursor.getInt(COL_LEAGUE), context));
 
-            TextView league = (TextView) v.findViewById(R.id.league_textview);
+            TextView league = v.findViewById(R.id.league_textview);
             league.setText(Utility.getLeague(cursor.getInt(COL_LEAGUE), context));
 
-            Button share_button = (Button) v.findViewById(R.id.share_button);
+            Button share_button = v.findViewById(R.id.share_button);
             String desc = context.getString(R.string.share_desc, mHolder.home_name.getText(), mHolder.away_name.getText());
             share_button.setContentDescription(desc);
-            Log.w(LOG_TAG, desc);
-            share_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String share = String.format("%s %s %s %s",
-                        mHolder.home_name.getText(),
-                        mHolder.score.getText(),
-                        mHolder.away_name.getText(),
-                        FOOTBALL_SCORES_HASHTAG
-                    );
+//            Log.w(LOG_TAG, desc);
 
-                    //add Share Action
-                    context.startActivity(createShareMatchIntent(share));
-                }
+            share_button.setOnClickListener(v1 -> {
+                String share = String.format("%s %s %s %s",
+                    mHolder.home_name.getText(),
+                    mHolder.score.getText(),
+                    mHolder.away_name.getText(),
+                    FOOTBALL_SCORES_HASHTAG
+                );
+
+                //add Share Action
+                context.startActivity(createShareMatchIntent(share));
             });
         } else {
             // no - remove the detail views from adapter listview item

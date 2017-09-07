@@ -2,28 +2,37 @@ package barqsoft.footballscores;
 
 import android.content.Context;
 
+import barqsoft.footballscores.data.League;
+
 public class Utility {
     public static final String LOG_TAG = Utility.class.getSimpleName();
 
-    public static final int SERIE_A = 357;
-    public static final int PREMIER_LEGAUE = 354;
-    public static final int CHAMPIONS_LEAGUE = 362;
-    public static final int PRIMERA_DIVISION = 358;
-    public static final int BUNDESLIGA = 351;
-
     public static String getLeague(int league_num, Context context) {
-        switch (league_num) {
-            case SERIE_A : return context.getString(R.string.seria_a);
-            case PREMIER_LEGAUE : return context.getString(R.string.premierleague);
-            case CHAMPIONS_LEAGUE : return context.getString(R.string.champions_league);
-            case PRIMERA_DIVISION : return context.getString(R.string.primeradivison);
-            case BUNDESLIGA : return context.getString(R.string.bundesliga);
+        League i = League.get(league_num);
+
+        switch (i) {
+            case PREMIER_LEAGUE: return context.getString(R.string.premier_league);
+            case CHAMPIONSHIP: return context.getString(R.string.championship);
+            case LEAGUE_1: return context.getString(R.string.league_1);
+            case LEAGUE_2: return context.getString(R.string.league_2);
+            case EREDIVISIE: return context.getString(R.string.eredivisie);
+            case LIGUE1: return context.getString(R.string.ligue1);
+            case LIGUE2: return context.getString(R.string.ligue2);
+            case BUNDESLIGA1: return context.getString(R.string.bundesliga1);
+            case BUNDESLIGA2: return context.getString(R.string.bundesliga2);
+            case BUNDESLIGA3: return context.getString(R.string.bundesliga3);
+            case PRIMERA_DIVISION: return context.getString(R.string.primera_division);
+            case SERIE_A: return context.getString(R.string.serie_a);
+            case PRIMERA_LIGA: return context.getString(R.string.primera_liga);
+            case DFB_POKAL: return context.getString(R.string.dfb_pokal);
+            case SERIE_B: return context.getString(R.string.serie_b);
+            case CHAMPIONS_LEAGUE: return context.getString(R.string.champion_league);
             default: return context.getString(R.string.get_league_unknown);
         }
     }
 
     public static String getMatchDay(int match_day, int league_num, Context context) {
-        if (league_num == CHAMPIONS_LEAGUE) {
+        if (league_num == League.CHAMPIONS_LEAGUE.code()) {
             if (match_day <= 6) {
                 return context.getString(R.string.group_stage_match);
             } else if(match_day == 7 || match_day == 8) {

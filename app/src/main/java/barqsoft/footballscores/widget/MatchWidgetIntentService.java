@@ -11,17 +11,18 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import barqsoft.footballscores.MainActivity;
 import barqsoft.footballscores.R;
 import barqsoft.footballscores.Utility;
 import barqsoft.footballscores.data.DatabaseContract;
 
+// TODO - Locale Handling
 public class MatchWidgetIntentService extends IntentService {
     private static final String[] MATCH_COLUMNS = {
         DatabaseContract.scores_table.MATCH_ID,
@@ -52,7 +53,7 @@ public class MatchWidgetIntentService extends IntentService {
 
         String[] selectionArgsDate = new String[1];
         Date today = new Date(System.currentTimeMillis());
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         selectionArgsDate[0] = format.format(today);
 
         Cursor data = getContentResolver().query(matchUri,
@@ -63,12 +64,12 @@ public class MatchWidgetIntentService extends IntentService {
         );
 
         if (data == null) {
-            Log.w("IntentService", "Do We Get Here?");
+            Log.w("IntentService", "Absolutely no Data");
             return;
         }
 
         if (!data.moveToFirst()) {
-            Log.w("IntentService", "Do We Get Here?");
+            Log.w("IntentService", "Empty List");
             data.close();
             return;
         }
@@ -110,9 +111,7 @@ public class MatchWidgetIntentService extends IntentService {
                 views.setImageViewResource(R.id.widget_home_crest, Utility.getTeamCrestByTeamName(home));
                 views.setImageViewResource(R.id.widget_away_crest, Utility.getTeamCrestByTeamName(away));
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-                    setRemoteContentDescriptions(views, homeDesc, awayDesc);
-                }
+                setRemoteContentDescriptions(views, homeDesc, awayDesc);
             }
 
             Intent launchIntent = new Intent(this, MainActivity.class);
