@@ -1,12 +1,14 @@
 package barqsoft.footballscores;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.stream.IntStream;
+
+import barqsoft.footballscores.service.FetchDataService;
 
 // TODO - Locale Handling
 public class PagerFragment extends Fragment {
@@ -43,10 +47,17 @@ public class PagerFragment extends Fragment {
             }
         );
 
+        update_scores();
+
         mPagerHandler.setAdapter(mPagerAdapter);
         // either Today or previous tab
         mPagerHandler.setCurrentItem(MainActivity.current_fragment);
         return rootView;
+    }
+
+    private void update_scores() {
+        Intent service_start = new Intent(getActivity(), FetchDataService.class);
+        getActivity().startService(service_start);
     }
 
     private class myPageAdapter extends FragmentStatePagerAdapter {

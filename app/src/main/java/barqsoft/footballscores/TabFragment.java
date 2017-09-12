@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import barqsoft.footballscores.data.DatabaseContract;
@@ -37,7 +36,8 @@ public class TabFragment extends Fragment implements LoaderManager.LoaderCallbac
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
-        update_scores();
+        Log.w(LOG_TAG, "OnCreateView TAB");
+//        update_scores();
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         final ListView score_list = rootView.findViewById(R.id.scores_list);

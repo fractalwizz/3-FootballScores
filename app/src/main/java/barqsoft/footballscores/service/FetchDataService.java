@@ -39,7 +39,8 @@ public class FetchDataService extends IntentService {
         getData("p2");
     }
 
-    // TODO - No need to re-insert matches already grabbed
+    // TODO - Update single day scores(?) - Fetch date + feed into api for single day
+    // Today-> only
     private void getData (String timeFrame) {
         //Creating fetch URL
         final String BASE_URL = "http://api.football-data.org/v1/fixtures"; //Base URL

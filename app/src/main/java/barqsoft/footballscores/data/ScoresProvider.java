@@ -111,7 +111,8 @@ public class ScoresProvider extends ContentProvider {
             case MATCHES_WITH_ID:
                 retCursor = mOpenHelper.getReadableDatabase().query(
                     DatabaseContract.SCORES_TABLE,
-                    projection,SCORES_BY_ID,
+                    projection,
+                    SCORES_BY_ID,
                     selectionArgs,
                     null,
                     null,

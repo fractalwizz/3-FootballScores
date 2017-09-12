@@ -61,7 +61,9 @@ public class Utility {
         if (teamname == null) { return R.drawable.no_icon; }
 
         switch (teamname) {
-            //TODO add more crests
+            // TODO - Add Dynamic Crest acquisition
+            // Team Api call - fetch SVG - Cache results
+            // Only query crest when match visible
             case "1. FC Heidenheim 1846" : return R.drawable.fc_heidenheim;
             case "1. FC Kaiserslautern" : return R.drawable.fc_kaiserslautern;
             case "1. FC Köln" : return R.drawable.fc_koln;
