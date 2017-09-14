@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+// TODO - Database Assistant library integration (?)
 public class DatabaseContract {
     public static final String SCORES_TABLE = "scores_table";
 

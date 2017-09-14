@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        // TODO - Add Settings Activity
+        // Palette Option
         return super.onOptionsItemSelected(item);
     }
 

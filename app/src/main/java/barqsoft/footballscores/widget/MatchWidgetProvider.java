@@ -10,6 +10,8 @@ import android.util.Log;
 
 import barqsoft.footballscores.service.FetchDataService;
 
+// TODO - Refresh Today Match action
+// FetchDataService updates today's scores -> Updates Widget values
 public class MatchWidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {

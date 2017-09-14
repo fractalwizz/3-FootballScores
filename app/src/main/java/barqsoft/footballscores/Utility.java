@@ -49,6 +49,8 @@ public class Utility {
         }
     }
 
+    public static long getDateMillis(int pos) { return System.currentTimeMillis() + ((pos - 2) * 86400000); }
+
     public static String getScores(int homegoals,int awaygoals) {
         if (homegoals < 0 || awaygoals < 0) {
             return " - ";

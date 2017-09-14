@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+// TODO - Integrate / Replace with ButterKnife
 public class ViewHolder {
     public TextView home_name;
     public TextView away_name;

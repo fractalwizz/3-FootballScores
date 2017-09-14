@@ -56,6 +56,7 @@ public class ScoresProvider extends ContentProvider {
         return false;
     }
 
+    // TODO - Score day refresh - update to be implemented
     @Override
     public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         return 0;

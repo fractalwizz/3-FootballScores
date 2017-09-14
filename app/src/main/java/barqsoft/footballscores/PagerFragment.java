@@ -29,7 +29,6 @@ public class PagerFragment extends Fragment {
     private myPageAdapter mPagerAdapter;
     public static final String LOG_TAG = PagerFragment.class.getSimpleName();
 
-    // tabs
     private TabFragment[] viewFragments = new TabFragment[NUM_PAGES];
 
     @Override
@@ -40,7 +39,7 @@ public class PagerFragment extends Fragment {
 
         IntStream.range(0, NUM_PAGES).forEach(
             i -> {
-                Date fragmentdate = new Date(System.currentTimeMillis() + ((i - 2) * 86400000));
+                Date fragmentdate = new Date(Utility.getDateMillis(i));
                 SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
                 viewFragments[i] = new TabFragment();
                 viewFragments[i].setFragmentDate(mFormat.format(fragmentdate));
@@ -57,6 +56,7 @@ public class PagerFragment extends Fragment {
 
     private void update_scores() {
         Intent service_start = new Intent(getActivity(), FetchDataService.class);
+        // TODO - Add boolean (optional?) for single-date refresh
         getActivity().startService(service_start);
     }
 
@@ -72,7 +72,7 @@ public class PagerFragment extends Fragment {
         // Returns the page title for the top indicator
         @Override
         public CharSequence getPageTitle(int position) {
-            return getDayName(getActivity(), System.currentTimeMillis() + ((position - 2) * 86400000));
+            return getDayName(getActivity(), Utility.getDateMillis(position));
         }
 
         public String getDayName(Context context, long dateInMillis) {

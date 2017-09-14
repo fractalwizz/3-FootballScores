@@ -177,8 +177,15 @@ public class FetchDataService extends IntentService {
 
                     Home = match_data.getString(HOME_TEAM);
                     Away = match_data.getString(AWAY_TEAM);
-                    Home_goals = match_data.getJSONObject(RESULT).getString(HOME_GOALS);
-                    Away_goals = match_data.getJSONObject(RESULT).getString(AWAY_GOALS);
+
+                    JSONObject goals = match_data.getJSONObject(RESULT);
+                    Home_goals = goals.isNull(HOME_GOALS)
+                        ? "-1"
+                        : goals.getString(HOME_GOALS);
+                    Away_goals = goals.isNull(AWAY_GOALS)
+                        ? "-1"
+                        : goals.getString(AWAY_GOALS);
+
                     match_day = match_data.getString(MATCH_DAY);
 
                     ContentValues match_values = new ContentValues();

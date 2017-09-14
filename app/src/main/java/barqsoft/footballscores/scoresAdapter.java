@@ -72,7 +72,10 @@ public class scoresAdapter extends CursorAdapter {
             Button share_button = v.findViewById(R.id.share_button);
             String desc = context.getString(R.string.share_desc, mHolder.home_name.getText(), mHolder.away_name.getText());
             share_button.setContentDescription(desc);
-//            Log.w(LOG_TAG, desc);
+
+            // TODO - Set Match for Widget Button
+            // Use this match instead of first
+            // Today Only
 
             share_button.setOnClickListener(v1 -> {
                 String share = String.format("%s %s %s %s",
@@ -92,11 +95,9 @@ public class scoresAdapter extends CursorAdapter {
     }
 
     public Intent createShareMatchIntent(String ShareText) {
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, ShareText);
-
-        return shareIntent;
+        return new Intent(Intent.ACTION_SEND)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
+            .setType("text/plain")
+            .putExtra(Intent.EXTRA_TEXT, ShareText);
     }
 }
