@@ -42,6 +42,8 @@ public class TabFragment extends Fragment implements LoaderManager.LoaderCallbac
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         final ListView score_list = rootView.findViewById(R.id.scores_list);
 
+        // TODO - Optimise Behavior
+        // Avoid unnecessary db querying
         mAdapter = new scoresAdapter(getActivity(), null, 0);
         score_list.setAdapter(mAdapter);
 

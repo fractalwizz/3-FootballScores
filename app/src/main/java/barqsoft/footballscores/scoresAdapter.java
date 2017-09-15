@@ -94,7 +94,7 @@ public class scoresAdapter extends CursorAdapter {
         }
     }
 
-    public Intent createShareMatchIntent(String ShareText) {
+    private Intent createShareMatchIntent(String ShareText) {
         return new Intent(Intent.ACTION_SEND)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
             .setType("text/plain")

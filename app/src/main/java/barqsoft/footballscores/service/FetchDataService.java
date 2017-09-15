@@ -149,9 +149,6 @@ public class FetchDataService extends IntentService {
                 League = League.replace(COMPET_LINK, "");
 
                 //This if statement controls which leagues we're interested in the data from.
-                //add leagues here in order to have them be added to the DB.
-                // If you are finding no data in the app, check that this contains all the leagues.
-                // If it doesn't, that can cause an empty DB, bypassing the dummy data routine.
                 if (inLeague(League)) {
                     match_id = match_data.getJSONObject(LINKS).getJSONObject(SELF).getString("href");
                     match_id = match_id.replace(MATCH_LINK, "");
