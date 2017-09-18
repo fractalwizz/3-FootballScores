@@ -11,21 +11,28 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class scoresAdapter extends CursorAdapter {
-    public static final int COL_HOME = 3;
-    public static final int COL_AWAY = 4;
-    public static final int COL_HOME_GOALS = 6;
-    public static final int COL_AWAY_GOALS = 7;
-    public static final int COL_DATE = 1;
-    public static final int COL_LEAGUE = 5;
-    public static final int COL_MATCHDAY = 9;
-    public static final int COL_ID = 8;
-    public static final int COL_MATCHTIME = 2;
-    public double detail_match_id = 0;
-    public static final String LOG_TAG = scoresAdapter.class.getSimpleName();
-    private String FOOTBALL_SCORES_HASHTAG = "#Football_Scores";
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    public scoresAdapter(Context context, Cursor cursor, int flags) { super(context, cursor, flags); }
+public class scoresAdapter extends CursorAdapter {
+    private static final int COL_HOME = 3;
+    private static final int COL_AWAY = 4;
+    private static final int COL_HOME_GOALS = 6;
+    private static final int COL_AWAY_GOALS = 7;
+    private static final int COL_DATE = 1;
+    private static final int COL_LEAGUE = 5;
+    private static final int COL_MATCHDAY = 9;
+    private static final int COL_ID = 8;
+    private static final int COL_MATCHTIME = 2;
+    double detail_match_id = 0;
+
+    @BindView(R.id.matchday_textview) TextView match_day;
+    @BindView(R.id.league_textview) TextView league;
+    @BindView(R.id.share_button) Button share_button;
+
+    public static final String LOG_TAG = scoresAdapter.class.getSimpleName();
+
+    scoresAdapter(Context context, Cursor cursor, int flags) { super(context, cursor, flags); }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
@@ -57,19 +64,15 @@ public class scoresAdapter extends CursorAdapter {
         // layout of details addition
         View v = vi.inflate(R.layout.detail_fragment, null);
         ViewGroup container = view.findViewById(R.id.details_fragment_container);
+        ButterKnife.bind(this, v);
 
         // is adapter listview item the selected one?
         if (mHolder.match_id == detail_match_id) {
             // yes - add container + layout for details
             container.addView(v, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-            TextView match_day = v.findViewById(R.id.matchday_textview);
             match_day.setText(Utility.getMatchDay(cursor.getInt(COL_MATCHDAY), cursor.getInt(COL_LEAGUE), context));
-
-            TextView league = v.findViewById(R.id.league_textview);
             league.setText(Utility.getLeague(cursor.getInt(COL_LEAGUE), context));
-
-            Button share_button = v.findViewById(R.id.share_button);
             String desc = context.getString(R.string.share_desc, mHolder.home_name.getText(), mHolder.away_name.getText());
             share_button.setContentDescription(desc);
 
@@ -82,7 +85,7 @@ public class scoresAdapter extends CursorAdapter {
                     mHolder.home_name.getText(),
                     mHolder.score.getText(),
                     mHolder.away_name.getText(),
-                    FOOTBALL_SCORES_HASHTAG
+                    "#Football_Scores"
                 );
 
                 //add Share Action

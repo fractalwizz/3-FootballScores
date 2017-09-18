@@ -51,7 +51,6 @@ public class FetchDataService extends IntentService {
         HttpURLConnection m_connection = null;
         BufferedReader reader = null;
         String JSON_data = null;
-        //Opening Connection
 
         try {
             URL fetch = new URL(fetch_build.toString());
@@ -69,9 +68,6 @@ public class FetchDataService extends IntentService {
 
             String line;
             while ((line = reader.readLine()) != null) {
-                // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                // But it does make debugging a *lot* easier if you print out the completed
-                // buffer for debugging.
                 line += "\n";
                 buffer.append(line);
             }

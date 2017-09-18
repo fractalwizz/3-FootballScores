@@ -13,6 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,8 +27,9 @@ import barqsoft.footballscores.service.FetchDataService;
 
 // TODO - Locale Handling
 public class PagerFragment extends Fragment {
+    @BindView(R.id.pager) ViewPager mPagerHandler;
+
     public static final int NUM_PAGES = 5;
-    public ViewPager mPagerHandler;
     private myPageAdapter mPagerAdapter;
     public static final String LOG_TAG = PagerFragment.class.getSimpleName();
 
@@ -34,7 +38,7 @@ public class PagerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.pager_fragment, container, false);
-        mPagerHandler = rootView.findViewById(R.id.pager);
+        ButterKnife.bind(this, rootView);
         mPagerAdapter = new myPageAdapter(getChildFragmentManager());
 
         IntStream.range(0, NUM_PAGES).forEach(
@@ -67,7 +71,7 @@ public class PagerFragment extends Fragment {
         @Override
         public int getCount() { return NUM_PAGES; }
 
-        public myPageAdapter(FragmentManager fm) { super(fm); }
+        myPageAdapter(FragmentManager fm) { super(fm); }
 
         // Returns the page title for the top indicator
         @Override
@@ -75,7 +79,7 @@ public class PagerFragment extends Fragment {
             return getDayName(getActivity(), Utility.getDateMillis(position));
         }
 
-        public String getDayName(Context context, long dateInMillis) {
+        String getDayName(Context context, long dateInMillis) {
             // If the date is today, return the localized version of "Today" instead of the actual
             // day name.
 

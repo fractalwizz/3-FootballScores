@@ -107,6 +107,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 26 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="butterknife-annotations-8.8.1" level="project" />
     <orderEntry type="library" name="support-core-ui-26.0.2" level="project" />
     <orderEntry type="library" name="appcompat-v7-26.0.2" level="project" />
     <orderEntry type="library" name="support-compat-26.0.2" level="project" />
@@ -116,6 +117,7 @@
     <orderEntry type="library" name="support-annotations-26.0.2" level="project" />
     <orderEntry type="library" name="support-vector-drawable-26.0.2" level="project" />
     <orderEntry type="library" name="support-v4-26.0.2" level="project" />
+    <orderEntry type="library" name="butterknife-8.8.1" level="project" />
     <orderEntry type="library" name="support-core-utils-26.0.2" level="project" />
   </component>
 </module>

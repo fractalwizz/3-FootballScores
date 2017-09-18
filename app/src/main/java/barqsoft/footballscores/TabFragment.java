@@ -1,6 +1,5 @@
 package barqsoft.footballscores;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,12 +13,16 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import barqsoft.footballscores.data.DatabaseContract;
-import barqsoft.footballscores.service.FetchDataService;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class TabFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+    @BindView(R.id.scores_list) ListView score_list;
+
     public static final String LOG_TAG = TabFragment.class.getSimpleName();
     public scoresAdapter mAdapter;
     public static final int SCORES_LOADER = 0;
@@ -27,20 +30,12 @@ public class TabFragment extends Fragment implements LoaderManager.LoaderCallbac
 
     public TabFragment() {}
 
-    private void update_scores() {
-        Intent service_start = new Intent(getActivity(), FetchDataService.class);
-        getActivity().startService(service_start);
-    }
-
     public void setFragmentDate(String date) { fragmentdate[0] = date; }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
-        Log.w(LOG_TAG, "OnCreateView TAB");
-//        update_scores();
-
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        final ListView score_list = rootView.findViewById(R.id.scores_list);
+        ButterKnife.bind(this, rootView);
 
         // TODO - Optimise Behavior
         // Avoid unnecessary db querying
@@ -51,6 +46,7 @@ public class TabFragment extends Fragment implements LoaderManager.LoaderCallbac
         // if not null, previously selected match
         mAdapter.detail_match_id = MainActivity.selected_match_id;
 
+        // TODO - Details slide animation (?)
         score_list.setOnItemClickListener((parent, view, position, id) -> {
             ViewHolder selected = (ViewHolder) view.getTag();
 
