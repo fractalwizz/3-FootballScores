@@ -2,13 +2,14 @@ package barqsoft.footballscores;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,17 @@ public class PagerFragment extends Fragment {
         Intent service_start = new Intent(getActivity(), FetchDataService.class);
         // TODO - Add boolean (optional?) for single-date refresh
         getActivity().startService(service_start);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String val = prefs.getString(getContext().getString(R.string.palette_key), "0");
+        int[] color = Utility.getColors(Integer.valueOf(val));
+
+        mPagerHandler.setBackgroundResource(color[0]);
     }
 
     private class myPageAdapter extends FragmentStatePagerAdapter {

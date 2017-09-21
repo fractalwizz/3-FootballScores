@@ -3,7 +3,9 @@ package barqsoft.footballscores;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +49,11 @@ public class scoresAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
         final ViewHolder mHolder = (ViewHolder) view.getTag();
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String val = prefs.getString(context.getString(R.string.palette_key), "0");
+        int[] color = Utility.getColors(Integer.valueOf(val));
+        view.setBackgroundResource(color[1]);
 
         mHolder.home_name.setText(cursor.getString(COL_HOME));
         mHolder.away_name.setText(cursor.getString(COL_AWAY));

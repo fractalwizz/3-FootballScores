@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:paddingTop="5dp"
         android:orientation="horizontal"
-        android:background="@color/orange12"
+        android:background="@color/blue_200"
         android:baselineAligned="false" >
 
         <LinearLayout

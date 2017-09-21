@@ -17,4 +17,7 @@
     <dimen name="widget_score_large">35sp</dimen>
     <dimen name="widget_team_large">15sp</dimen>
     <dimen name="widget_data_large">20sp</dimen>
+
+    <!-- ListPreference -->
+    <dimen name="color_list_height">55dp</dimen>
 </resources>

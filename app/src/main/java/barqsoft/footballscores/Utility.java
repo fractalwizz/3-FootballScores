@@ -59,6 +59,30 @@ public class Utility {
         }
     }
 
+    public static int[] getColors(int i) {
+        switch (i) {
+            case 0: return new int[] {R.color.orange_200, R.color.orange_50};
+            case 1: return new int[] {R.color.red_200, R.color.red_50};
+            case 2: return new int[] {R.color.deep_purple_200, R.color.deep_purple_50};
+            case 3: return new int[] {R.color.light_blue_200, R.color.light_blue_50};
+            case 4: return new int[] {R.color.green_200, R.color.green_50};
+            case 5: return new int[] {R.color.yellow_200, R.color.yellow_50};
+            case 6: return new int[] {R.color.deep_orange_200, R.color.deep_orange_50};
+            case 7: return new int[] {R.color.blue_grey_200, R.color.blue_grey_50};
+            case 8: return new int[] {R.color.pink_200, R.color.pink_50};
+            case 9: return new int[] {R.color.indigo_200, R.color.indigo_50};
+            case 10: return new int[] {R.color.cyan_200, R.color.cyan_50};
+            case 11: return new int[] {R.color.light_green_200, R.color.light_green_50};
+            case 12: return new int[] {R.color.amber_200, R.color.amber_50};
+            case 13: return new int[] {R.color.brown_200, R.color.brown_50};
+            case 14: return new int[] {R.color.purple_200, R.color.purple_50};
+            case 15: return new int[] {R.color.blue_200, R.color.blue_50};
+            case 16: return new int[] {R.color.teal_200, R.color.teal_50};
+            case 17: return new int[] {R.color.lime_200, R.color.lime_50};
+            default: return new int[] {R.color.orange_200, R.color.orange_50};
+        }
+    }
+
     public static int getTeamCrestByTeamName (String teamname) {
         if (teamname == null) { return R.drawable.no_icon; }
 

@@ -61,4 +61,9 @@
 
     <!-- Widget -->
     <string name="title_widget_match">Football Scores Match Widget</string>
+
+    <!-- Preferences -->
+    <string name="palette_key">palette</string>
+    <string name="palette_title">Palette Selection</string>
+    <string name="palette_summary">Set Palette for App Use</string>
 </resources>

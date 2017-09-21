@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <barqsoft.footballscores.ColorListPreference
+        android:key="@string/palette_key"
+        android:title="@string/palette_title"
+        android:dialogTitle="@string/palette_title"
+        android:summary="@string/palette_summary"
+        android:defaultValue="0"
+        android:entries="@array/indices"
+        android:entryValues="@array/indices" />
+</PreferenceScreen>
